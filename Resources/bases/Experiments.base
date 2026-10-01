@@ -1,0 +1,44 @@
+filters:
+  and:
+    - file.inFolder("Experiments")
+    - 'type == "experiment"'
+views:
+  - type: table
+    name: All experiments
+    order:
+      - file.name
+      - experiment_type
+      - status
+      - outcome
+      - owner
+      - start_date
+      - end_date
+    sort:
+      - property: start_date
+        direction: DESC
+  - type: table
+    name: In progress
+    filters:
+      or:
+        - 'status == "planned"'
+        - 'status == "in-progress"'
+    order:
+      - file.name
+      - experiment_type
+      - status
+      - start_date
+      - projects
+    sort:
+      - property: start_date
+        direction: DESC
+  - type: table
+    name: Failed or negative
+    filters:
+      or:
+        - 'outcome == "failed"'
+        - 'outcome == "negative"'
+    order:
+      - file.name
+      - outcome
+      - outcome_reason
+      - start_date
